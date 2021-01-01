@@ -1,0 +1,176 @@
+\documentclass{article}
+
+%------------------------------------------------------------------------------
+% Packages
+%------------------------------------------------------------------------------
+
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{color}
+\usepackage{scrextend}
+\usepackage[document]{ragged2e}
+\usepackage[none]{hyphenat}
+\usepackage{xparse}
+\usepackage{multicol}
+\usepackage{etoolbox}
+
+%------------------------------------------------------------------------------
+% Styles
+%------------------------------------------------------------------------------
+
+\def\padding{0.125in}
+
+% Paper margin and size
+\geometry{paperheight = 11 in, paperwidth = 8.5 in}
+\geometry{top = 72pt, 
+		  left = \dimexpr(72pt + \padding), 
+		  right = 72pt, 
+		  bottom = 72pt, 
+		  marginparwidth = 1.5 in}
+
+% Remove paragraph indents
+\setlength{\parindent}{0 pt}
+\setlength{\parfillskip}{0 pt}
+
+% Remove page number
+\pagenumbering{gobble}
+
+% Line height
+\renewcommand{\baselinestretch}{1.25} 
+
+% Change itemize's bullet sizes
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+% Change itemize/enumerate's margins
+\setlist{leftmargin = 12pt}
+\setlist[itemize]{noitemsep, topsep=0pt}
+\setlength\multicolsep{0pt}
+
+% Remove pdflink's borders
+\hypersetup{pdfborder = {0 0 0}}
+
+\definecolor{dim}{gray}{0.2}
+
+%------------------------------------------------------------------------------
+% Commands
+%------------------------------------------------------------------------------
+
+\newcommand{\Name}[1]{
+    \hspace{-\padding}\huge\textbf{#1}
+    \normalsize
+}
+
+\newcommand{\Heading}[1]{
+	\vspace{12pt}
+    \hspace{-\padding}\large\textbf{#1}
+    \normalsize
+}
+
+\newcommand{\NewJob}[4]{
+	\def\dates{#1}%
+	\def\title{#2}%
+	\def\company{#3}%
+	\def\location{#4}%
+
+	\vspace{6pt}
+	{\textbf{\title} \hspace*{\fill} \textcolor{dim}{\dates}}\\
+
+	\ifdefempty{\company}{}{
+		\vspace{-2pt}
+		\textcolor{dim}{\footnotesize \company \hspace*{\fill} \location}\\
+		\vspace{2pt}
+	}
+}
+
+\NewDocumentCommand{\List}{m o}{
+    \begin{itemize}[leftmargin = \IfValueTF{#2}{#2}{\padding}, itemindent = 0in]
+        #1
+    \end{itemize}
+	\vspace{4pt}
+}
+
+%------------------------------------------------------------------------------
+% Document
+%------------------------------------------------------------------------------
+
+\begin{document}
+
+%------------------------------------------------------------------------------
+
+\Name{Stephen Li}
+
+\List{
+    \item[] \href{mailto:hello@stephenli.ca}{hello@stephenli.ca}
+    \item[] \href{https://github.com/Trinovantes}{github.com/trinovantes}
+}[0in]
+
+%------------------------------------------------------------------------------
+
+% Insert company specific comments here
+\def\Objective{}
+
+\ifdefempty{\Objective}{}{
+	\Heading{Objective}
+	\List{
+		\item[] \Objective
+	}[0in]
+}
+
+%------------------------------------------------------------------------------
+
+\Heading{Skills}
+\List{
+	\item[] C++, LLVM, JS, Node.js, Backbone.js, HTML, CSS, Python, Django, Flask, MySQL
+}[0in]
+
+%------------------------------------------------------------------------------
+
+\Heading{Education}
+
+\NewJob{2016 -- 2019}{Master of Mathematics (MMath)}{University of Waterloo}{Waterloo, Canada}
+\List{
+	\item Wrote thesis on automating programming assignment grading through static analysis with LLVM
+    \item Worked as teaching assistant for various CS courses (concurrency, operating systems, introductory CS)
+}
+
+\NewJob{2011 -- 2016}{Bachelor of Software Engineering (BSE)}{University of Waterloo}{Waterloo, Canada}
+\List{
+    \item Graduated with distinction
+}
+
+%------------------------------------------------------------------------------
+
+\Heading{Internships}
+
+\NewJob{Jan 2015 - Apr 2015}{C\texttt{\#} Developer}{Rocscience}{Toronto, Canada}
+\List{
+	\item Designed interface for extruding tunnel faces
+    \item Optimized UI responsiveness when working with large 3D CAD models
+}
+
+\NewJob{May 2014 - Aug 2014}{iOS Developer}{Lookout}{San Francisco, USA}
+\List{
+    \item Automated detection of text truncation due to internationalization
+    \item Investigated ECDSA signature verification on iOS
+}
+
+\NewJob{Sept 2013 - Dec 2013}{JIT Developer}{IBM}{Markham, Canada}
+\List{
+    \item Improved JIT compiler's generated code performance on POWER8 architecture
+    \item Implemented debugging utility to assist with using GDB
+}
+
+\NewJob{Jan 2013 - Apr 2013}{Android Developer}{500px}{Toronto, Canada}
+\List{
+    \item Built homepage, gallery, and user profile for Android tablets
+}
+
+\NewJob{May 2012 - Aug 2012}{Web Developer}{Pilot Interactive}{Toronto, Canada}
+\List{
+    \item Built websites for clients with CodeIgniter, WordPress, Backbone.js
+    \item Converted PSDs to HTML web pages
+}
+
+\end{document}
