@@ -10,6 +10,9 @@ on:
     paths:
       - '*.tex'
 
+env:
+  TECTONIC_BUILD_PATH: tectonic-build
+
 jobs:
   pushBuild:
     name: Push Build
@@ -19,11 +22,21 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Cache Tectonic
+        uses: actions/cache@v2
+        env:
+          CACHE_NAME: cache-tectonic
+        with:
+          path: |
+            ~/.cache/Tectonic
+            ${{ env.TECTONIC_BUILD_PATH }}
+          key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('.github/workflows/pushBuild.yml') }}
+
       - name: Install Tectonic
         run: |
           sudo apt-get update
           sudo apt-get install libfontconfig1-dev libgraphite2-dev libharfbuzz-dev libicu-dev libssl-dev zlib1g-dev cargo
-          cargo install tectonic
+          cargo install tectonic --target-dir ${{ env.TECTONIC_BUILD_PATH }}
 
       - name: Build
         run: tectonic Li_Stephen_Resume.tex
