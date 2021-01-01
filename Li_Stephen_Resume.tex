@@ -15,38 +15,47 @@
 \usepackage{xparse}
 \usepackage{multicol}
 \usepackage{etoolbox}
+\usepackage{mathtools}
+\usepackage{xargs}
 
 %------------------------------------------------------------------------------
 % Styles
 %------------------------------------------------------------------------------
 
-\def\padding{0.125in}
+\def\Padding{0.125in}
+\def\LeftOffset{2.2466in} % PageWidth * (phi - 1) / phi - PageMargin
 
 % Paper margin and size
-\geometry{paperheight = 11 in, paperwidth = 8.5 in}
-\geometry{top = 72pt, 
-		  left = \dimexpr(72pt + \padding), 
-		  right = 72pt, 
-		  bottom = 72pt, 
-		  marginparwidth = 1.5 in}
+\geometry{paperheight = 11in, paperwidth = 8.5in}
+\geometry{top = 1in, 
+		  left = \dimexpr(1in + \Padding), 
+		  right = 1in, 
+		  bottom = 1in, 
+		  marginparwidth = 1.5in}
 
 % Remove paragraph indents
-\setlength{\parindent}{0 pt}
-\setlength{\parfillskip}{0 pt}
+\setlength{\parindent}{0in}
+\setlength{\parfillskip}{0in}
 
 % Remove page number
 \pagenumbering{gobble}
 
 % Line height
-\renewcommand{\baselinestretch}{1.25} 
+\renewcommand{\baselinestretch}{1.33} 
 
 % Change itemize's bullet sizes
 \renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
 
 % Change itemize/enumerate's margins
-\setlist{leftmargin = 12pt}
-\setlist[itemize]{noitemsep, topsep=0pt}
-\setlength\multicolsep{0pt}
+\setlist{
+	leftmargin=\Padding
+}
+\setlist[itemize]{
+	nolistsep,
+	noitemsep,
+	topsep=0in,
+}
+\setlength\multicolsep{0in}
 
 % Remove pdflink's borders
 \hypersetup{pdfborder = {0 0 0}}
@@ -57,38 +66,59 @@
 % Commands
 %------------------------------------------------------------------------------
 
-\newcommand{\Name}[1]{
-    \hspace{-\padding}\huge\textbf{#1}
-    \normalsize
+\newcommandx{\Name}[2][2]{
+	\def\name{#1}%
+	\def\title{#2}%
+
+	\hspace{-\Padding}%
+	\huge\textbf{#1}%
+	\huge\title%
+	\normalsize
 }
 
 \newcommand{\Heading}[1]{
 	\vspace{12pt}
-    \hspace{-\padding}\large\textbf{#1}
+    \hspace{-\Padding}\large\textbf{#1}
     \normalsize
 }
 
-\newcommand{\NewJob}[4]{
-	\def\dates{#1}%
-	\def\title{#2}%
-	\def\company{#3}%
-	\def\location{#4}%
+\newcommand{\Job}[5]{
+	\def\dates{#1}
+	\def\title{#2}
+	\def\company{#3}
+	\def\location{#4}
+	\def\responsibilities{#5}
 
 	\vspace{6pt}
-	{\textbf{\title} \hspace*{\fill} \textcolor{dim}{\dates}}\\
+	{\textbf{\title} \hspace*{\fill} \textcolor{dim}{\dates}} \\
 
 	\ifdefempty{\company}{}{
 		\vspace{-2pt}
-		\textcolor{dim}{\footnotesize \company \hspace*{\fill} \location}\\
+		\textcolor{dim}{\footnotesize \company \hspace*{\fill} \location} \\
 		\vspace{2pt}
 	}
+
+    \begin{itemize}
+        \responsibilities
+    \end{itemize}
 }
 
-\NewDocumentCommand{\List}{m o}{
-    \begin{itemize}[leftmargin = \IfValueTF{#2}{#2}{\padding}, itemindent = 0in]
-        #1
-    \end{itemize}
-	\vspace{4pt}
+\newcommand{\Internship}[3]{
+	\def\dates{#1}
+	\def\title{#2}
+	\def\company{#3}
+
+	\LabelItem{\company}{%
+		\title \hfill \textcolor{dim}{\dates}
+	}[1]
+}
+
+\newcommandx\LabelItem[3][3=0]{
+	\def\Label{#1}%
+	\def\Item{#2}%
+	\def\Depth{#3}%
+
+	\item \parbox{\LeftOffset - \dimexpr(\Padding * \Depth)}{\Label} \Item  \\
 }
 
 %------------------------------------------------------------------------------
@@ -101,76 +131,56 @@
 
 \Name{Stephen Li}
 
-\List{
+\vspace{6pt}
+\begin{itemize}[leftmargin=0in]
     \item[] \href{mailto:hello@stephenli.ca}{hello@stephenli.ca}
     \item[] \href{https://github.com/Trinovantes}{github.com/trinovantes}
-}[0in]
+\end{itemize}
 
-%------------------------------------------------------------------------------
-
-% Insert company specific comments here
-\def\Objective{}
-
-\ifdefempty{\Objective}{}{
-	\Heading{Objective}
-	\List{
-		\item[] \Objective
-	}[0in]
-}
+\noindent\rule{\textwidth}{1pt}
 
 %------------------------------------------------------------------------------
 
 \Heading{Skills}
-\List{
-	\item[] C++, LLVM, JS, Node.js, Backbone.js, HTML, CSS, Python, Django, Flask, MySQL
-}[0in]
+
+\vspace{6pt}
+\begin{itemize}
+	\LabelItem{Web Dev}{Node.js, Vue.js, Express, Python, MySQL}
+	\LabelItem{Systems Dev}{C++, Rust}
+	\LabelItem{Game Dev}{UE4, Blender}
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\Heading{Work Experience}
+
+\Job{2019 -- present}{Indie Game Developer}{}{}{
+	\item Designed and developed indie games with Unreal Engine 4
+}
 
 %------------------------------------------------------------------------------
 
 \Heading{Education}
 
-\NewJob{2016 -- 2019}{Master of Mathematics (MMath)}{University of Waterloo}{Waterloo, Canada}
-\List{
+\Job{2016 -- 2019}{Master of Mathematics (MMath)}{University of Waterloo}{Waterloo, Canada}{
 	\item Wrote thesis on automating programming assignment grading through static analysis with LLVM
-    \item Worked as teaching assistant for various CS courses (concurrency, operating systems, introductory CS)
+    \item Marked assignments and held tutorials for various CS courses (Concurrency, OS, Introductory CS)
 }
 
-\NewJob{2011 -- 2016}{Bachelor of Software Engineering (BSE)}{University of Waterloo}{Waterloo, Canada}
-\List{
-    \item Graduated with distinction
+\Job{2011 -- 2016}{Bachelor of Software Engineering (BSE)}{University of Waterloo}{Waterloo, Canada}{
+	\item
+		Graduated with distinction
+	\item
+		Internships:
+		\begin{itemize}
+			\Internship{Jan 2015 - Apr 2015}{C\texttt{\#}, WPF}{Rocscience}
+			\Internship{May 2014 - Aug 2014}{iOS}{Lookout}
+			\Internship{Sept 2013 - Dec 2013}{Java JIT Compiler Optimization}{IBM}
+			\Internship{Jan 2013 - Apr 2013}{Android}{500px}
+			\Internship{May 2012 - Aug 2012}{WordPress, PHP, Photoshop}{Pilot Interactive}
+		\end{itemize}
 }
 
 %------------------------------------------------------------------------------
-
-\Heading{Internships}
-
-\NewJob{Jan 2015 - Apr 2015}{C\texttt{\#} Developer}{Rocscience}{Toronto, Canada}
-\List{
-	\item Designed interface for extruding tunnel faces
-    \item Optimized UI responsiveness when working with large 3D CAD models
-}
-
-\NewJob{May 2014 - Aug 2014}{iOS Developer}{Lookout}{San Francisco, USA}
-\List{
-    \item Automated detection of text truncation due to internationalization
-    \item Investigated ECDSA signature verification on iOS
-}
-
-\NewJob{Sept 2013 - Dec 2013}{JIT Developer}{IBM}{Markham, Canada}
-\List{
-    \item Improved JIT compiler's generated code performance on POWER8 architecture
-    \item Implemented debugging utility to assist with using GDB
-}
-
-\NewJob{Jan 2013 - Apr 2013}{Android Developer}{500px}{Toronto, Canada}
-\List{
-    \item Built homepage, gallery, and user profile for Android tablets
-}
-
-\NewJob{May 2012 - Aug 2012}{Web Developer}{Pilot Interactive}{Toronto, Canada}
-\List{
-    \item Built websites for clients with CodeIgniter, WordPress, Backbone.js
-    \item Converted PSDs to HTML web pages
-}
 
 \end{document}
