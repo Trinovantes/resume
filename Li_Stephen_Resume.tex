@@ -73,43 +73,44 @@
 	\hspace{-\Padding}%
 	\huge\textbf{#1}%
 	\huge\title%
-	\normalsize
+	\normalsize%
 }
 
 \newcommand{\Heading}[1]{
-	\vspace{12pt}
-    \hspace{-\Padding}\large\textbf{#1}
-    \normalsize
+	\vspace{12pt}%
+	\hspace{-\Padding}%
+	\large\textbf{#1}%
+	\normalsize%
 }
 
 \newcommand{\Job}[5]{
-	\def\dates{#1}
-	\def\title{#2}
-	\def\company{#3}
-	\def\location{#4}
-	\def\responsibilities{#5}
+	\def\dates{#1}%
+	\def\title{#2}%
+	\def\company{#3}%
+	\def\location{#4}%
+	\def\responsibilities{#5}%
 
-	\vspace{6pt}
+	\vspace{6pt}%
 	{\textbf{\title} \hspace*{\fill} \textcolor{dim}{\dates}} \\
 
 	\ifdefempty{\company}{}{
-		\vspace{-2pt}
+		\vspace{-2pt}%
 		\textcolor{dim}{\footnotesize \company \hspace*{\fill} \location} \\
-		\vspace{2pt}
+		\vspace{2pt}%
 	}
 
     \begin{itemize}
-        \responsibilities
+        \responsibilities%
     \end{itemize}
 }
 
 \newcommand{\Internship}[3]{
-	\def\dates{#1}
-	\def\title{#2}
-	\def\company{#3}
+	\def\dates{#1}%
+	\def\title{#2}%
+	\def\company{#3}%
 
 	\LabelItem{\company}{%
-		\title \hfill \textcolor{dim}{\dates}
+		\title \hfill \textcolor{dim}{\dates}%
 	}[1]
 }
 
