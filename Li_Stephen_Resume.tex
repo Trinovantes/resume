@@ -27,11 +27,11 @@
 
 % Paper margin and size
 \geometry{paperheight = 11in, paperwidth = 8.5in}
-\geometry{top = 1in, 
-		  left = \dimexpr(1in + \Padding), 
-		  right = 1in, 
-		  bottom = 1in, 
-		  marginparwidth = 1.5in}
+\geometry{top = 1in,
+          left = \dimexpr(1in + \Padding),
+          right = 1in,
+          bottom = 1in,
+          marginparwidth = 1.5in}
 
 % Remove paragraph indents
 \setlength{\parindent}{0in}
@@ -41,19 +41,19 @@
 \pagenumbering{gobble}
 
 % Line height
-\renewcommand{\baselinestretch}{1.33} 
+\renewcommand{\baselinestretch}{1.33}
 
 % Change itemize's bullet sizes
 \renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
 
 % Change itemize/enumerate's margins
 \setlist{
-	leftmargin=\Padding
+    leftmargin=\Padding
 }
 \setlist[itemize]{
-	nolistsep,
-	noitemsep,
-	topsep=0in,
+    nolistsep,
+    noitemsep,
+    topsep=0in,
 }
 \setlength\multicolsep{0in}
 
@@ -67,37 +67,37 @@
 %------------------------------------------------------------------------------
 
 \newcommandx{\Name}[2][2]{
-	\def\name{#1}%
-	\def\title{#2}%
+    \def\name{#1}%
+    \def\title{#2}%
 
-	\hspace{-\Padding}%
-	\huge\textbf{#1}%
-	\huge\title%
-	\normalsize%
+    \hspace{-\Padding}%
+    \huge\textbf{#1}%
+    \huge\title%
+    \normalsize%
 }
 
 \newcommand{\Heading}[1]{
-	\vspace{12pt}%
-	\hspace{-\Padding}%
-	\large\textbf{#1}%
-	\normalsize%
+    \vspace{12pt}%
+    \hspace{-\Padding}%
+    \large\textbf{#1}%
+    \normalsize%
 }
 
 \newcommand{\Job}[5]{
-	\def\dates{#1}%
-	\def\title{#2}%
-	\def\company{#3}%
-	\def\location{#4}%
-	\def\responsibilities{#5}%
+    \def\dates{#1}%
+    \def\title{#2}%
+    \def\company{#3}%
+    \def\location{#4}%
+    \def\responsibilities{#5}%
 
-	\vspace{6pt}%
-	{\textbf{\title} \hspace*{\fill} \textcolor{dim}{\dates}} \\
+    \vspace{6pt}%
+    {\textbf{\title} \hspace*{\fill} \textcolor{dim}{\dates}} \\
 
-	\ifdefempty{\company}{}{
-		\vspace{-2pt}%
-		\textcolor{dim}{\footnotesize \company \hspace*{\fill} \location} \\
-		\vspace{2pt}%
-	}
+    \ifdefempty{\company}{}{
+        \vspace{-2pt}%
+        \textcolor{dim}{\footnotesize \company \hspace*{\fill} \location} \\
+        \vspace{2pt}%
+    }
 
     \begin{itemize}
         \responsibilities%
@@ -105,21 +105,21 @@
 }
 
 \newcommand{\Internship}[3]{
-	\def\dates{#1}%
-	\def\title{#2}%
-	\def\company{#3}%
+    \def\dates{#1}%
+    \def\title{#2}%
+    \def\company{#3}%
 
-	\LabelItem{\company}{%
-		\title \hfill \textcolor{dim}{\dates}%
-	}[1]
+    \LabelItem{\company}{%
+        \title \hfill \textcolor{dim}{\dates}%
+    }[1]
 }
 
 \newcommandx\LabelItem[3][3=0]{
-	\def\Label{#1}%
-	\def\Item{#2}%
-	\def\Depth{#3}%
+    \def\Label{#1}%
+    \def\Item{#2}%
+    \def\Depth{#3}%
 
-	\item \parbox{\LeftOffset - \dimexpr(\Padding * \Depth)}{\Label} \Item  \\
+    \item \parbox{\LeftOffset - \dimexpr(\Padding * \Depth)}{\Label} \Item  \\
 }
 
 %------------------------------------------------------------------------------
@@ -135,7 +135,7 @@
 \vspace{6pt}
 \begin{itemize}[leftmargin=0in]
     \item[] \href{mailto:hello@stephenli.ca}{hello@stephenli.ca}
-    \item[] \href{https://github.com/Trinovantes}{github.com/trinovantes}
+    \item[] \href{https://stephenli.ca/projects}{stephenli.ca/projects}
 \end{itemize}
 
 \noindent\rule{\textwidth}{1pt}
@@ -146,9 +146,9 @@
 
 \vspace{6pt}
 \begin{itemize}
-	\LabelItem{Game Dev}{Unreal Engine 4, Blender}
-	\LabelItem{Systems Dev}{C++, Rust}
-	\LabelItem{Web Dev}{Typescript, Vue.js, Electron.js, Express.js, Python, MySQL}
+    \LabelItem{Systems Dev}{C++, Rust}
+    \LabelItem{Web Dev}{TypeScript, Vue.js, Electron.js, Express.js, Python, MySQL}
+    \LabelItem{Game Dev}{Unreal Engine 4, Godot, Blender}
 \end{itemize}
 
 %------------------------------------------------------------------------------
@@ -156,30 +156,38 @@
 \Heading{Work Experience}
 
 \Job{2019 -- present}{Indie Game Developer}{}{}{
-	\item Designed and developed indie games with Unreal Engine 4
+    \item
+        Designed and developed indie games
+}
+
+\Heading{Personal Projects}
+
+\Job{2020 -- present}{HoloMemes}{\href{https://www.holomemes.moe}{holomemes.moe}}{}{
+    \item Feature-rich image editor using HTML5 canvas
+    \item Built using Vue.js, Konva.js, and TypeScript
 }
 
 %------------------------------------------------------------------------------
 
 \Heading{Education}
 
-\Job{2016 -- 2019}{Master of Mathematics (MMath)}{University of Waterloo}{Waterloo, Canada}{
-	\item Researched automating programming assignment grading through static analysis with LLVM
-    \item Marked assignments and held tutorials for various CS courses (Concurrency, OS, Introductory CS)
+\Job{2016 -- 2018}{Master of Mathematics (MMath)}{University of Waterloo}{Waterloo, Canada}{
+    \item Researched automating programming assignment grading through static analysis with LLVM
+    \item Designed assignments and held tutorials for CS courses (Operating Systems, Concurrency, Performance Optimization)
 }
 
 \Job{2011 -- 2016}{Bachelor of Software Engineering (BSE)}{University of Waterloo}{Waterloo, Canada}{
-	\item
-		Graduated with distinction
-	\item
-		Internships:
-		\begin{itemize}
-			\Internship{Jan 2015 - Apr 2015}{C\texttt{\#}, WPF}{Rocscience}
-			\Internship{May 2014 - Aug 2014}{iOS}{Lookout}
-			\Internship{Sept 2013 - Dec 2013}{Java JIT Compiler Optimization}{IBM}
-			\Internship{Jan 2013 - Apr 2013}{Android}{500px}
-			\Internship{May 2012 - Aug 2012}{WordPress, PHP, Photoshop}{Pilot Interactive}
-		\end{itemize}
+    \item
+        Graduated with distinction
+    \item
+        Internships:
+        \begin{itemize}
+            \Internship{Jan 2015 - Apr 2015}{C\texttt{\#}, WPF}{Rocscience}
+            \Internship{May 2014 - Aug 2014}{iOS}{Lookout}
+            \Internship{Sept 2013 - Dec 2013}{Java JIT Compiler Optimization}{IBM}
+            \Internship{Jan 2013 - Apr 2013}{Android}{500px}
+            \Internship{May 2012 - Aug 2012}{WordPress, PHP}{Pilot Interactive}
+        \end{itemize}
 }
 
 %------------------------------------------------------------------------------
