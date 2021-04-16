@@ -11,10 +11,12 @@ on:
       - '*.tex'
 
 env:
+  AUTO_TAG: latest
+  AUTO_TITLE: Latest Build
   TECTONIC_BUILD_PATH: tectonic-build
 
 jobs:
-  pushBuild:
+  push_build:
     name: Push Build
     runs-on: ubuntu-latest
 
@@ -43,16 +45,16 @@ jobs:
 
       - name: Update Latest Build Release
         id: update_latest
-        uses: Trinovantes/action-automatic-release@v2.0.0
+        uses: Trinovantes/action-automatic-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          auto_release_tag: latest
-          auto_release_title: Latest Build
+          auto_release_tag: ${{ env.AUTO_TAG }}
+          auto_release_title: ${{ env.AUTO_TITLE }}
           is_prerelease: false
 
       - name: Upload Asset to Latest Build Release
-        uses:  Trinovantes/action-release-upload@v1.0.0
+        uses:  Trinovantes/action-release-upload@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
